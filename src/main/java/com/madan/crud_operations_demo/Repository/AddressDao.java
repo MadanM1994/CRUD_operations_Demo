@@ -1,6 +1,6 @@
-package com.madan.crud_operations_demo.Dao;
+package com.madan.crud_operations_demo.Repository;
 
-import com.madan.crud_operations_demo.Address;
+import com.madan.crud_operations_demo.Entity.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

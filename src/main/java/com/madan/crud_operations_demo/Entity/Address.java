@@ -1,20 +1,32 @@
-package com.madan.crud_operations_demo;
+package com.madan.crud_operations_demo.Entity;
+
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.Persistent;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "address")
-@Data
-public class Address {
+@Setter
+@Getter
+@EqualsAndHashCode
+public class Address implements Serializable {
+
+    private static final long serialVersionUID = 1234567L;
+
 
     @Id
     @Column(name = "address_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int addressId;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id", nullable = false)
+    @Persistent
     private Employees employees;
 
     @Column(name = "street")

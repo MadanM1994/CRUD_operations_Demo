@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaRepositories
-@ComponentScan("com.madan.crud_operations_demo.Dao")
+@ComponentScan({"com.madan.crud_operations_demo.Repository", "com.madan.crud_operations_demo.Controller", "com.madan.crud_operations_demo.Service"})
 public class CrudOperationsDemoApplication {
 
     public static void main(String[] args) {
