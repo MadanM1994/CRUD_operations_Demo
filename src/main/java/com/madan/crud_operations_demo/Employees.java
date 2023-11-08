@@ -1,9 +1,10 @@
 package com.madan.crud_operations_demo;
 
-import java.util.Date;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.boot.autoconfigure.web.WebProperties;
+
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="employees")
@@ -21,16 +22,23 @@ public class Employees {
     @Column(name = "last_name")
     private String lastName;
 
-     @Column(name = "date_of_birth")
-     @Temporal(TemporalType.DATE)
-     private Date dateOfBirth;
+    @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)
+    private Date dateOfBirth;
 
-     @Column(name = "gender")
-     private char gender;
+    @Column(name = "gender")
+    private char gender;
 
     @Column(name = "is_active")
     private char active;
 
     @Column(name = "is_deleted")
     private char deleted;
+
+    @OneToMany(mappedBy = "employees", cascade = CascadeType.ALL) // Define the one-to-many relationship with Address
+    private List<Address> addresses;
+
+    @OneToMany(mappedBy = "employees", cascade = CascadeType.ALL) // Define the one-to-many relationship with ContactInformation
+    private List<ContactInformation> contactInformation;
+
 }

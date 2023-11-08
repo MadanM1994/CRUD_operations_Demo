@@ -3,8 +3,6 @@ package com.madan.crud_operations_demo;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 @Entity
 @Table(name = "address")
 @Data
@@ -15,14 +13,11 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int addressId;
 
-    @Column(name="employee_id")
-    private int employeeId;
-
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employees employees;
 
-    @Column(name="street")
+    @Column(name = "street")
     private String street;
 
     @Column(name = "city")
@@ -32,17 +27,11 @@ public class Address {
     private String state;
 
     @Column(name = "zip_code")
-    private int zipCode;
+    private String zipCode;
 
     @Column(name = "is_active")
     private char active;
 
     @Column(name = "is_deleted")
     private char deleted;
-
-    @OneToMany
-    private List<ContactInformation> contactInformationList;
-
-    @OneToMany
-    private List<Address> addressList;
 }
