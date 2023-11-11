@@ -20,7 +20,7 @@ public class ContactInformation implements Serializable {
     private int contactInformationId;
 
     @ManyToOne
-    @JoinColumn(name = "employee_id", nullable = false)
+    @JoinColumn(name = "employee_id")
     @Persistent
     private Employees employees;
 
