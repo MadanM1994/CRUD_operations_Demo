@@ -1,9 +1,9 @@
-package com.madan.crud_operations_demo.Entity;
+package com.madan.crud_operations_demo.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.Persistent;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
@@ -11,6 +11,7 @@ import java.io.Serializable;
 @Data
 public class ContactInformation implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1234567L;
 
 
@@ -19,10 +20,10 @@ public class ContactInformation implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int contactInformationId;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    @Persistent
-    private Employees employees;
+//    @ManyToOne
+//    @JoinColumn(name = "employee_id")
+//    @Persistent
+//    private Employees employees;
 
     @Column(name = "email")
     private String email;

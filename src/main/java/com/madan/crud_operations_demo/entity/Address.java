@@ -1,12 +1,11 @@
-package com.madan.crud_operations_demo.Entity;
+package com.madan.crud_operations_demo.entity;
 
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Persistent;
-
+import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
@@ -16,6 +15,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class Address implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1234567L;
 
 
@@ -24,10 +24,10 @@ public class Address implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int addressId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
-    @Persistent
-    private Employees employees;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "employee_id")
+//    @Persistent
+//    private Employees employees;
 
     @Column(name = "street")
     private String street;
