@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Setter
 public class Email implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1234567L;
 
     @Id

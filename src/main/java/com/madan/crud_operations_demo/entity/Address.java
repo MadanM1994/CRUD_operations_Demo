@@ -5,8 +5,7 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Persistent;
-
+import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
@@ -16,6 +15,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class Address implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1234567L;
 
 
