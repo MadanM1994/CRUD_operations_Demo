@@ -1,16 +1,21 @@
-package com.madan.crud_operations_demo.Service;
+package com.madan.crud_operations_demo.service;
 
-import com.madan.crud_operations_demo.Dto.AddressDTO;
-import com.madan.crud_operations_demo.Dto.ContactInformationDTO;
-import com.madan.crud_operations_demo.Dto.EmployeesDTO;
-import com.madan.crud_operations_demo.Entity.Address;
-import com.madan.crud_operations_demo.Entity.ContactInformation;
-import com.madan.crud_operations_demo.Repository.AddressRepository;
-import com.madan.crud_operations_demo.Repository.ContactInformationRepository;
-import com.madan.crud_operations_demo.Repository.EmployeesRepository;
-import com.madan.crud_operations_demo.Entity.Employees;
+import com.madan.crud_operations_demo.dto.AddressDTO;
+import com.madan.crud_operations_demo.dto.ContactInformationDTO;
+import com.madan.crud_operations_demo.dto.EmailDTO;
+import com.madan.crud_operations_demo.dto.EmployeesDTO;
+import com.madan.crud_operations_demo.entity.Address;
+import com.madan.crud_operations_demo.entity.ContactInformation;
+import com.madan.crud_operations_demo.entity.Email;
+import com.madan.crud_operations_demo.repository.AddressRepository;
+import com.madan.crud_operations_demo.repository.ContactInformationRepository;
+import com.madan.crud_operations_demo.repository.EmailRepository;
+import com.madan.crud_operations_demo.repository.EmployeesRepository;
+import com.madan.crud_operations_demo.entity.Employees;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,14 +31,20 @@ public class EmployeesService {
     private final EmployeesRepository employeesRepository;
     private final ContactInformationRepository contactInformationRepository;
     private final AddressRepository addressRepository;
+    private final EmailRepository emailRepository;
+    private final EmailService emailService;
 
     @Autowired
     public EmployeesService(EmployeesRepository employeesRepository,
                             ContactInformationRepository contactInformationRepository,
-                            AddressRepository addressRepository) {
+                            AddressRepository addressRepository,
+                            EmailRepository emailRepository,
+                            EmailService emailService) {
         this.employeesRepository = employeesRepository;
         this.contactInformationRepository = contactInformationRepository;
         this.addressRepository = addressRepository;
+        this.emailRepository = emailRepository;
+        this.emailService = emailService;
     }
 
     // Convert Employee Entity to DTO
@@ -66,6 +77,20 @@ public class EmployeesService {
         return newEmployees;
     }
 
+    //  convert Email to EmailDTO
+    private EmailDTO convertToEmailDTO (Email email) {
+        EmailDTO newEmailDTO = new EmailDTO();
+        BeanUtils.copyProperties(email, newEmailDTO);
+        return newEmailDTO;
+    }
+
+    // Convert Email DTO to Email
+    private Email convertToEmail(EmailDTO emailDTO){
+        Email newEmails = new Email();
+        BeanUtils.copyProperties(emailDTO, newEmails);
+        return newEmails;
+    }
+
     // GET ALL EMPLOYEES
     public List<EmployeesDTO> getAllEmployees() {
         return employeesRepository.findAll()
@@ -85,12 +110,14 @@ public class EmployeesService {
     }
 
     // ADD EMPLOYEE
-    public ResponseEntity<?> addEmployee(EmployeesDTO employeesDTO) {
+    public String addEmployee(EmployeesDTO employeesDTO) {
         if (employeesDTO != null) {
-            Employees employes = convertToEmployees(employeesDTO);
-            return ResponseEntity.ok(employeesRepository.save(employes));
+            Employees employees = convertToEmployees(employeesDTO);
+            employeesRepository.save(employees);
+            emailService.addEmployeeToEmail(employees.getEmail());
+            return "Successfully added employee record";
         }
-        return ResponseEntity.badRequest().body("Please Enter a Valid Data in JSON Format");
+        return "Please Enter a Valid Data in JSON Format";
     }
 
     // CREATE EMPLOYEE RECORD
@@ -112,7 +139,23 @@ public class EmployeesService {
 //      }
 //    }
 
-    // DELETE EMPLOYEE BY ID
+//    @Transactional
+//    // ADD EMPLOYEE
+//    public ResponseEntity<?> addEmployee(EmployeesDTO employeesDTO) {
+//        if(employeesDTO != null){
+//            Employees employee = convertToEmployees(employeesDTO);
+//            List<Email> emails = employeesDTO.getEmails().stream()
+//                    .map(emailDTO -> convertToEmail(emailDTO))
+//                    .collect(Collectors.toList());
+//            emails.forEach(email -> email.setEmployees(employee));
+//            employee.setEmails(emails);
+//            employeesRepository.save(employee);
+//            return ResponseEntity.ok("Saved Successfully");
+//        }
+//return ResponseEntity.badRequest().body("Failed");
+//    }
+
+        // DELETE EMPLOYEE BY ID
     public ResponseEntity<?> deleteEmployeeById(int id) {
         Optional<Employees> employ = employeesRepository.findById(id);
         if (employ.isPresent()) {

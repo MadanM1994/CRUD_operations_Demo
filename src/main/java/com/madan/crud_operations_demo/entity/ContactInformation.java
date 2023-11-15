@@ -1,4 +1,4 @@
-package com.madan.crud_operations_demo.Entity;
+package com.madan.crud_operations_demo.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -19,10 +19,10 @@ public class ContactInformation implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int contactInformationId;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    @Persistent
-    private Employees employees;
+//    @ManyToOne
+//    @JoinColumn(name = "employee_id")
+//    @Persistent
+//    private Employees employees;
 
     @Column(name = "email")
     private String email;

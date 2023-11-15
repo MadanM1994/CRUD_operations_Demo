@@ -1,8 +1,5 @@
-package com.madan.crud_operations_demo.Dto;
+package com.madan.crud_operations_demo.dto;
 
-import com.madan.crud_operations_demo.Entity.Address;
-import com.madan.crud_operations_demo.Entity.ContactInformation;
-import com.madan.crud_operations_demo.Entity.Employees;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,4 +9,5 @@ public class EmployeeDetailsDTO {
     private EmployeesDTO employees;
     private ContactInformationDTO contactInformation;
     private AddressDTO address;
+    private EmailDTO email;
 }

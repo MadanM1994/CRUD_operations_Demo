@@ -1,6 +1,5 @@
-package com.madan.crud_operations_demo.Entity;
+package com.madan.crud_operations_demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,6 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 public class Employees implements Serializable {
+
     private static final long serialVersionUID = 1234567L;
 
     @Id
@@ -43,13 +43,16 @@ public class Employees implements Serializable {
     @Column(name = "is_deleted")
     private char deleted;
 
-    // One-to-Many relationship with Address entities
-    @OneToMany(mappedBy = "employees", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("employees") // Ignore the 'employees' property in Address during JSON serialization
-    private List<Address> addresses;
+    @Column(name = "email")
+    private String email;
 
-    // One-to-Many relationship with ContactInformation entities
-    @OneToMany(mappedBy = "employees", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("employees") // Ignore the 'employees' property in ContactInformation during JSON serialization
-    private List<ContactInformation> contactInformation;
+//    // One-to-Many relationship with Address entities
+//    @OneToMany(mappedBy = "employees", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonIgnoreProperties("employees") // Ignore the 'employees' property in Address during JSON serialization
+//    private List<Address> addresses;
+//
+//    // One-to-Many relationship with ContactInformation entities
+//    @OneToMany(mappedBy = "employees", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonIgnoreProperties("employees") // Ignore the 'employees' property in ContactInformation during JSON serialization
+//    private List<ContactInformation> contactInformation;
 }

@@ -1,4 +1,4 @@
-package com.madan.crud_operations_demo.Dto;
+package com.madan.crud_operations_demo.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,6 @@ import lombok.Setter;
 @Setter
 public class ContactInformationDTO {
     private int contactInformationId;
-    private int employeeId;
     private String email;
     private String phoneNumber;
 }

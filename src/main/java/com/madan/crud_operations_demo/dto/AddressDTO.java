@@ -1,4 +1,4 @@
-package com.madan.crud_operations_demo.Dto;
+package com.madan.crud_operations_demo.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,8 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddressDTO {
-    private int addressId;
-    private int employeeId;
     private String street;
     private String city;
     private String state;

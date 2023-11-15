@@ -1,14 +1,9 @@
-package com.madan.crud_operations_demo.Controller;
+package com.madan.crud_operations_demo.controller;
 
-import com.madan.crud_operations_demo.Dto.EmployeeDetailsDTO;
-import com.madan.crud_operations_demo.Dto.EmployeesDTO;
-import com.madan.crud_operations_demo.Entity.Employees;
-import com.madan.crud_operations_demo.Service.EmployeesService;
+import com.madan.crud_operations_demo.dto.EmployeesDTO;
+import com.madan.crud_operations_demo.service.EmployeesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +31,7 @@ public class EmployeesContoller {
         return ResponseEntity.ok(employeesService.getEmployeeById(id));
     }
 
-    @PostMapping("add")
+    @PostMapping("create")
     public ResponseEntity<?> addEmployee(@RequestBody EmployeesDTO employeeDTO){
         return ResponseEntity.ok(employeesService.addEmployee(employeeDTO));
     }

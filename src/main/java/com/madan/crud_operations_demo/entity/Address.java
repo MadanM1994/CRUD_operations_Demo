@@ -1,4 +1,4 @@
-package com.madan.crud_operations_demo.Entity;
+package com.madan.crud_operations_demo.entity;
 
 
 import jakarta.persistence.*;
@@ -24,10 +24,10 @@ public class Address implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int addressId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
-    @Persistent
-    private Employees employees;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "employee_id")
+//    @Persistent
+//    private Employees employees;
 
     @Column(name = "street")
     private String street;
