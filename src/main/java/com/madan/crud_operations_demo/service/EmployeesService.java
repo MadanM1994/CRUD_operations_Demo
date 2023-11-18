@@ -7,6 +7,7 @@ import com.madan.crud_operations_demo.dto.EmployeesDTO;
 import com.madan.crud_operations_demo.entity.Address;
 import com.madan.crud_operations_demo.entity.ContactInformation;
 import com.madan.crud_operations_demo.entity.Email;
+import com.madan.crud_operations_demo.projection.EmployeeByNameProjection;
 import com.madan.crud_operations_demo.repository.AddressRepository;
 import com.madan.crud_operations_demo.repository.ContactInformationRepository;
 import com.madan.crud_operations_demo.repository.EmailRepository;
@@ -70,9 +71,25 @@ public class EmployeesService {
     private Employees convertToEmployees(EmployeesDTO employeesDTO) {
         Employees newEmployees = new Employees();
         BeanUtils.copyProperties(employeesDTO, newEmployees);
-        newEmployees.setActive('Y');
-        newEmployees.setDeleted('N');
+        newEmployees.setIsActive('Y');
+        newEmployees.setIsDeleted('N');
         return newEmployees;
+    }
+
+    // Convert AddressDTO to Address entity
+    private Address convertToAddress(AddressDTO addressDTO) {
+        Address address = new Address();
+        BeanUtils.copyProperties(addressDTO, address);
+        // Additional properties setup if needed
+        return address;
+    }
+
+    // Convert ContactInformationDTO to ContactInformation entity
+    private ContactInformation convertToContactInformation(ContactInformationDTO contactInfoDTO) {
+        ContactInformation contactInformation = new ContactInformation();
+        BeanUtils.copyProperties(contactInfoDTO, contactInformation);
+        // Additional properties setup if needed
+        return contactInformation;
     }
 
     //  convert Email to EmailDTO
@@ -109,14 +126,48 @@ public class EmployeesService {
 
     // ADD EMPLOYEE
     public String addEmployee(EmployeesDTO employeesDTO) {
-        if (employeesDTO != null) {
-            Employees employees = convertToEmployees(employeesDTO);
-            employeesRepository.save(employees);
-            emailService.addEmployeeToEmail(employees.getEmail());
-            return "Successfully added employee record";
+        //1. convert employee DTO to employees
+        Employees employees= convertToEmployees(employeesDTO);
+        //2.save employees into the DB and assign it to variable
+        Employees newEmployee = employeesRepository.save(employees);
+        //3. extract and save address
+        //3.1 extracting a list of address from employeeDTO
+        List<Address> addresses = employeesDTO.getAddresses().stream()
+                .map(addressDTO -> {
+                          Address address =  convertToAddress(addressDTO);
+        address.setEmployees(newEmployee);
+        address.setIsActive('Y');
+        address.setIsDeleted('N');
+        return address;
+                }).collect(Collectors.toList());
+        addressRepository.saveAll(addresses);
+        //4.extract and save contact information
+        //4.1 extract list of contact information from employees DTO
+        List<ContactInformation> contactInformations = employeesDTO.getContactInformation()
+                .stream()
+                .map(contactInformationDTO -> {
+            ContactInformation contactInformation = convertToContactInformation(contactInformationDTO);
+            contactInformation.setEmployees(newEmployee);
+                    contactInformation.setIsActive('Y');
+                    contactInformation.setIsDeleted('N');
+            return  contactInformation;
+        }).collect(Collectors.toList());
+        for (ContactInformation contactInformation : contactInformations) {
+            emailService.addEmployeeToEmail(contactInformation.getEmail());
         }
-        return "Please Enter a Valid Data in JSON Format";
+        contactInformationRepository.saveAll(contactInformations);
+
+return " ";
     }
+//        if (employeesDTO != null) {
+//            Employees employees = convertToEmployees(employeesDTO);
+//            employeesRepository.saveAndFlush(employees);
+//            System.out.println(employees.getEmployeeId());
+//            emailService.addEmployeeToEmail(employees.getEmail());
+//            return "Successfully added employee record";
+//        }
+//        return "Please Enter a Valid Data in JSON Format";
+//    }
 
     // CREATE EMPLOYEE RECORD
 //    public ResponseEntity<?> addEmployee(EmployeeDetailsDTO employeeDetailsDTO) {
@@ -174,12 +225,17 @@ public class EmployeesService {
             existingEmployee.setLastName(newEmployeeRecord.getLastName());
             existingEmployee.setDateOfBirth(newEmployeeRecord.getDateOfBirth());
             existingEmployee.setGender(newEmployeeRecord.getGender());
-            existingEmployee.setActive(newEmployeeRecord.getActive());
-            existingEmployee.setDeleted(newEmployeeRecord.getDeleted());
+            existingEmployee.setIsActive(newEmployeeRecord.getIsActive());
+            existingEmployee.setIsDeleted(newEmployeeRecord.getIsDeleted());
             employeesRepository.save(existingEmployee);
             return ResponseEntity.ok("Successfully Updated");
         }
         return ResponseEntity.ok("Update Failed");
+    }
+
+    public List<EmployeeByNameProjection> getEmployeeDetailsByMatch(String name) {
+       List<EmployeeByNameProjection> employeesByName = employeesRepository.findEmployeeDetailsByFirstName(name);
+        return employeesByName;
     }
 }
 

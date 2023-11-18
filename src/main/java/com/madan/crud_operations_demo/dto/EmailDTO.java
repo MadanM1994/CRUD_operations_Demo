@@ -1,6 +1,6 @@
 package com.madan.crud_operations_demo.dto;
 
-import com.madan.crud_operations_demo.entity.Email;
+import com.madan.crud_operations_demo.constants.EmailStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,5 +9,5 @@ import lombok.Setter;
 public class EmailDTO {
 
     private String emailAddress;
-    private Email.EmailStatus emailStatus;
+    private EmailStatus emailStatus;
 }

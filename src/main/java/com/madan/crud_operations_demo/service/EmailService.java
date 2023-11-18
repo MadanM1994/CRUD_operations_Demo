@@ -1,5 +1,6 @@
 package com.madan.crud_operations_demo.service;
 
+import com.madan.crud_operations_demo.constants.EmailStatus;
 import com.madan.crud_operations_demo.email.EmailDetails;
 import com.madan.crud_operations_demo.entity.Email;
 import com.madan.crud_operations_demo.repository.EmailRepository;
@@ -37,11 +38,11 @@ public class EmailService {
         }
             Email newemail = new Email();
             newemail.setEmailAddress(email);
-            newemail.setEmailStatus(Email.EmailStatus.CREATED);
+            newemail.setEmailStatus(EmailStatus.CREATED);
             emailRepository.save(newemail);
     }
 
-    public void updateEmailStatus(int emailId, Email.EmailStatus status){
+    public void updateEmailStatus(int emailId, EmailStatus status){
         Optional<Email> optionalEmail = emailRepository.findById(emailId);
         if (optionalEmail.isPresent()){
             Email newEmail = optionalEmail.get();
@@ -77,11 +78,11 @@ public class EmailService {
                     helper.setSubject(emailDetails.getSubject());
                     helper.setText(emailDetails.getBody());
 
-                    updateEmailStatus(email.getEmailId(), Email.EmailStatus.SENT);
+                    updateEmailStatus(email.getEmailId(), EmailStatus.SENT);
 
                     mailSender.send(mimeMessage);
                 } catch (MessagingException e) {
-                    updateEmailStatus(email.getEmailId(), Email.EmailStatus.FAILED);
+                    updateEmailStatus(email.getEmailId(), EmailStatus.FAILED);
                     throw new RuntimeException(e);
                 }
 

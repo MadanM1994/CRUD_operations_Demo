@@ -1,20 +1,18 @@
 package com.madan.crud_operations_demo.entity;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
-@Entity
-@Table(name = "employees")
-@EqualsAndHashCode
 @Getter
 @Setter
+@Entity
+@Table(name = "employees")
 public class Employees implements Serializable {
 
     @Serial
@@ -22,8 +20,7 @@ public class Employees implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "employee_id")
-    private int employeeId;
+    private Integer employeeId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -31,29 +28,22 @@ public class Employees implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
+    private String gender;
+
     @Column(name = "date_of_birth")
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
-    @Column(name = "gender")
-    private char gender;
-
     @Column(name = "is_active")
-    private char active;
+    private char isActive;
 
     @Column(name = "is_deleted")
-    private char deleted;
+    private char isDeleted;
 
-    @Column(name = "email")
-    private String email;
+    @OneToMany(mappedBy = "employees")
+    private Set<Address> addresses;
 
-//    // One-to-Many relationship with Address entities
-//    @OneToMany(mappedBy = "employees", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonIgnoreProperties("employees") // Ignore the 'employees' property in Address during JSON serialization
-//    private List<Address> addresses;
-//
-//    // One-to-Many relationship with ContactInformation entities
-//    @OneToMany(mappedBy = "employees", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonIgnoreProperties("employees") // Ignore the 'employees' property in ContactInformation during JSON serialization
-//    private List<ContactInformation> contactInformation;
+    @OneToMany(mappedBy = "employees")
+    private Set<ContactInformation> contactInformations;
+
 }

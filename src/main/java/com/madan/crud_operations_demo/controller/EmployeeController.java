@@ -1,6 +1,7 @@
 package com.madan.crud_operations_demo.controller;
 
 import com.madan.crud_operations_demo.dto.EmployeesDTO;
+import com.madan.crud_operations_demo.projection.EmployeeByNameProjection;
 import com.madan.crud_operations_demo.service.EmployeesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,13 +11,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("employees")
-public class EmployeesContoller {
+public class EmployeeController {
 
     @Autowired
     private final EmployeesService employeesService;
 
-    public EmployeesContoller(EmployeesService employeesService){
-
+    public EmployeeController(EmployeesService employeesService) {
         this.employeesService = employeesService;
     }
 
@@ -25,10 +25,14 @@ public class EmployeesContoller {
         return ResponseEntity.ok(employeesService.getAllEmployees());
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<?> getEmployeeById(@PathVariable int id){
-        System.out.println("End point reachead");
-        return ResponseEntity.ok(employeesService.getEmployeeById(id));
+//    @GetMapping("{id}")
+//    public ResponseEntity<?> getEmployeeById(@PathVariable int id){
+//        return ResponseEntity.ok(employeesService.getEmployeeById(id));
+//    }
+
+    @GetMapping("/{name}")
+    public ResponseEntity<List<EmployeeByNameProjection>> getEmployeeDetailsByMatch (@PathVariable String name){
+        return ResponseEntity.ok(employeesService.getEmployeeDetailsByMatch(name));
     }
 
     @PostMapping("create")
