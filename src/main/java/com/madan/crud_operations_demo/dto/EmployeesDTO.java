@@ -1,6 +1,5 @@
 package com.madan.crud_operations_demo.dto;
 
-import com.madan.crud_operations_demo.entity.Address;
 import lombok.Getter;
 import lombok.Setter;
 

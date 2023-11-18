@@ -10,13 +10,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface EmployeesRepository extends JpaRepository <Employees, Integer> {
+public interface EmployeesRepository extends JpaRepository<Employees, Integer> {
 
     @Query("SELECT e.employeeId as employeeId, e.firstName as firstName, e.lastName as LastName, ci.email as email, e.dateOfBirth as dateOfBirth, a.city as city " +
             "FROM Employees e " +
             "JOIN e.addresses a " +
             "JOIN e.contactInformations ci " +
             "WHERE e.firstName LIKE %:name% OR e.lastName LIKE %:name%")
-
     List<EmployeeByNameProjection> findEmployeeDetailsByFirstName(@Param("name") String name);
 }

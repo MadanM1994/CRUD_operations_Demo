@@ -1,6 +1,5 @@
 package com.madan.crud_operations_demo.entity;
 
-import com.madan.crud_operations_demo.entity.Employees;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

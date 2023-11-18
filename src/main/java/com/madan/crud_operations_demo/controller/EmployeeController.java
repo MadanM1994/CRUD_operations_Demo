@@ -13,10 +13,11 @@ import java.util.List;
 @RequestMapping("employees")
 public class EmployeeController {
 
-    @Autowired
     private final EmployeesService employeesService;
 
+    @Autowired
     public EmployeeController(EmployeesService employeesService) {
+
         this.employeesService = employeesService;
     }
 
@@ -25,10 +26,10 @@ public class EmployeeController {
         return ResponseEntity.ok(employeesService.getAllEmployees());
     }
 
-//    @GetMapping("{id}")
-//    public ResponseEntity<?> getEmployeeById(@PathVariable int id){
-//        return ResponseEntity.ok(employeesService.getEmployeeById(id));
-//    }
+    @GetMapping("employee/{id}")
+    public ResponseEntity<?> getEmployeeById(@PathVariable int id){
+        return ResponseEntity.ok(employeesService.getEmployeeById(id));
+    }
 
     @GetMapping("/{name}")
     public ResponseEntity<List<EmployeeByNameProjection>> getEmployeeDetailsByMatch (@PathVariable String name){
