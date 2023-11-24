@@ -1,5 +1,6 @@
 package com.madan.crud_operations_demo.entity;
 
+import com.madan.crud_operations_demo.constants.EmailStatus;
 import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.*;
@@ -27,11 +28,5 @@ public class Email implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "email_status")
     private EmailStatus emailStatus;
-
-    // Enum for email status
-    public enum EmailStatus {
-        CREATED, SENT, FAILED
-    }
-
 
 }

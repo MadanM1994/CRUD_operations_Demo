@@ -1,39 +1,38 @@
 package com.madan.crud_operations_demo.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "contact_information")
-@Data
 public class ContactInformation implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1234567L;
 
-
     @Id
-    @Column(name = "contact_information_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int contactInformationId;
+    private Integer contactInfoId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "employee_id")
-//    @Persistent
-//    private Employees employees;
-
-    @Column(name = "email")
     private String email;
 
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @ManyToOne
+    @JoinColumn(name = "employee_id", nullable = false)
+    private Employees employees;
+
     @Column(name = "is_active")
-    private char active;
+    private char isActive;
 
     @Column(name = "is_deleted")
-    private char deleted;
+    private char isDeleted;
+
 }

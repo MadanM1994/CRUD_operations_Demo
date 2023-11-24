@@ -9,7 +9,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableScheduling
-@ComponentScan({"com.madan.crud_operations_demo.repository", "com.madan.crud_operations_demo.controller", "com.madan.crud_operations_demo.service"})
+@ComponentScan({"com.madan.crud_operations_demo.repository",
+        "com.madan.crud_operations_demo.controller",
+        "com.madan.crud_operations_demo.service",
+        "com.madan.crud_operations_demo.implementation",
+        "com.madan.crud_operations_demo.scheduler",
+        "com.madan.crud_operations_demo.jobs"})
 public class CrudOperationsDemoApplication {
 
     public static void main(String[] args) {
