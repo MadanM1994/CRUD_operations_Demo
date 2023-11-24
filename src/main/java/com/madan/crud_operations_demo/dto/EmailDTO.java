@@ -7,7 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EmailDTO {
-
     private String emailAddress;
     private EmailStatus emailStatus;
 }

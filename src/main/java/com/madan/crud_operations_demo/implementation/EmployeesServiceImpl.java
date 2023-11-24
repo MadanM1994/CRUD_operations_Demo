@@ -12,6 +12,7 @@ import com.madan.crud_operations_demo.service.DTOToEntityService;
 import com.madan.crud_operations_demo.service.EmailJobService;
 import com.madan.crud_operations_demo.service.EmployeesService;
 import com.madan.crud_operations_demo.service.EntityToDTOService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class EmployeesServiceImpl implements EmployeesService {
     public EmployeesServiceImpl(EmployeesRepository employeesRepository,
                                 ContactInformationRepository contactInformationRepository,
                                 AddressRepository addressRepository,
-                                EmailJobService emailJobService,
+                                @Qualifier("emailJobServiceImpl") EmailJobService emailJobService,
                                 EntityToDTOService entityToDTOService,
                                 DTOToEntityService dtoToEntityService) {
         this.employeesRepository = employeesRepository;
