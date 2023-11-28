@@ -51,11 +51,9 @@ public class EmployeesServiceImpl implements EmployeesService {
     }
 
     public EmployeesDTO getEmployeeById(int id) {
-        if (employeesRepository.findById(id).isPresent()) {
-            Optional<Employees> employ = employeesRepository.findById(id);
-            return employ.map(employee -> entityToDTOService.convertToEmployeesDTO(employee)).orElse(null);
-        }
-        return null;
+        return employeesRepository.findById(id)
+                .map(employee -> entityToDTOService.convertToEmployeesDTO(employee))
+                .orElse(null);
     }
 
     public List<EmployeeByNameProjection> getEmployeeDetailsByMatch(String name) {
@@ -92,7 +90,7 @@ public class EmployeesServiceImpl implements EmployeesService {
             emailJobService.addEmployeeToEmail(contactInformation.getEmail());
         }
         contactInformationRepository.saveAll(contactInformations);
-        return "Successfully Added ";
+        return "Successfully Added";
     }
 
 
@@ -105,23 +103,6 @@ public class EmployeesServiceImpl implements EmployeesService {
         return Boolean.FALSE;
     }
 
-    public String updateById(int id, EmployeesDTO employeeDTO) {
-        Optional<Employees> existingEmployeee = employeesRepository.findById(id);
-        if (existingEmployeee.isPresent()) {
-            Employees existingEmployee = existingEmployeee.get();
-            Employees newEmployeeRecord = dtoToEntityService.convertToEmployees(employeeDTO);
-            existingEmployee.setEmployeeId(id);
-            existingEmployee.setFirstName(newEmployeeRecord.getFirstName());
-            existingEmployee.setLastName(newEmployeeRecord.getLastName());
-            existingEmployee.setDateOfBirth(newEmployeeRecord.getDateOfBirth());
-            existingEmployee.setGender(newEmployeeRecord.getGender());
-            existingEmployee.setIsActive(newEmployeeRecord.getIsActive());
-            existingEmployee.setIsDeleted(newEmployeeRecord.getIsDeleted());
-            employeesRepository.save(existingEmployee);
-            return "Successfully Updated";
-        }
-        return "Update Failed";
-    }
 }
 
 

@@ -1,9 +1,8 @@
 package com.madan.crud_operations_demo.entity;
 
 import com.madan.crud_operations_demo.constants.EmailStatus;
-import lombok.Getter;
-import lombok.Setter;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -12,6 +11,9 @@ import java.io.Serializable;
 @Table(name = "email")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Email implements Serializable {
 
     @Serial

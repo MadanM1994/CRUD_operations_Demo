@@ -31,11 +31,6 @@ public class EmployeeController {
         return ResponseEntity.ok(employeesService.getEmployeeById(id));
     }
 
-    @PostMapping("update/{id}")
-    public ResponseEntity<?> updateById(@PathVariable int id, @RequestBody EmployeesDTO employeeDTO) {
-        return ResponseEntity.ok(employeesService.updateById(id, employeeDTO));
-    }
-
     @GetMapping("/{name}")
     public ResponseEntity<List<EmployeeByNameProjection>> getEmployeeDetailsByMatch(@PathVariable String name) {
         return ResponseEntity.ok(employeesService.getEmployeeDetailsByMatch(name));
