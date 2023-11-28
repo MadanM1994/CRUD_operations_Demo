@@ -12,8 +12,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.mail.javamail.JavaMailSender;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,9 +21,6 @@ import java.util.Optional;
 
 @DataJpaTest
 public class EmployeesRepositoryTest {
-
-    @MockBean
-    private JavaMailSender javaMailSender;
 
     @Autowired
     private EmployeesRepository employeesRepository;
@@ -37,7 +32,7 @@ public class EmployeesRepositoryTest {
     private AddressRepository addressRepository;
 
     @AfterEach
-    private void clenaup() {
+    public void cleanup() {
         contactInformationRepository.deleteAll();
         addressRepository.deleteAll();
         employeesRepository.deleteAll();

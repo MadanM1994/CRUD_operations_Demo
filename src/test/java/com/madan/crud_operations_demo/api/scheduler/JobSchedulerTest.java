@@ -45,7 +45,7 @@ class JobsSchedulerTest {
         oddEmail.setEmailId(3); // Assume this is an odd ID email
         // Set up the rest of the oddEmail details
 
-        whitelistEmails = Arrays.asList("whitelist@example.com");
+        whitelistEmails = List.of("whitelist@example.com");
         ReflectionTestUtils.setField(jobsScheduler, "whiteList", new String[]{"whitelist@example.com"});
     }
 

@@ -87,7 +87,6 @@ class EmployeeControllerTest {
                     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                     return formatter.parse("02-10-1994");
                 } catch (ParseException e) {
-                    e.printStackTrace();
                     return null;
                 }
             }

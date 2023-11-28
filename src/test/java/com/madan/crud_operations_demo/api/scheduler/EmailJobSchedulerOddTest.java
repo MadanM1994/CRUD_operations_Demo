@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -48,7 +47,7 @@ class EmailJobSchedulerOddTest {
     @Test
     void whenEmailNotInWhitelist_thenSendEmail() {
         List<Email> emails = Collections.singletonList(email);
-        List<String> whitelistEmails = Arrays.asList("other@example.com");
+        List<String> whitelistEmails = List.of("other@example.com");
         MimeMessage mimeMessage = mock(MimeMessage.class);
         when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
         when(emailRepository.findById(anyInt())).thenReturn(Optional.of(email));
@@ -61,8 +60,8 @@ class EmailJobSchedulerOddTest {
 
     @Test
     void whenEmailInWhitelist_thenDoNotSendEmail() {
-        List<Email> emails = Arrays.asList(email);
-        List<String> whitelistEmails = Arrays.asList("oddtest@example.com");
+        List<Email> emails = Collections.singletonList(email);
+        List<String> whitelistEmails = List.of("oddtest@example.com");
 
         emailJobSchedulerOdd.emailJobExecutionOdd(emails, whitelistEmails);
 
@@ -73,8 +72,8 @@ class EmailJobSchedulerOddTest {
     @Test
     void whenMessagingException_thenUpdateStatusToFailed() {
         // Arrange
-        List<Email> emails = Arrays.asList(email);
-        List<String> whitelistEmails = Arrays.asList("other@example.com");
+        List<Email> emails = Collections.singletonList(email);
+        List<String> whitelistEmails = List.of("other@example.com");
         MimeMessage mimeMessage = mock(MimeMessage.class);
         when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
         when(emailRepository.findById(anyInt())).thenReturn(Optional.of(email));
