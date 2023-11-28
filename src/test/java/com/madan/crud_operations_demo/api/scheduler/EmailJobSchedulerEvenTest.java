@@ -4,7 +4,6 @@ import com.madan.crud_operations_demo.constants.EmailStatus;
 import com.madan.crud_operations_demo.entity.Email;
 import com.madan.crud_operations_demo.jobs.EmailJobSchedulerEven;
 import com.madan.crud_operations_demo.repository.EmailRepository;
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,7 +43,7 @@ class EmailJobSchedulerEvenTest {
     }
 
     @Test
-    void whenEmailNotInWhitelist_thenSendEmail() throws MessagingException {
+    void whenEmailNotInWhitelist_thenSendEmail() {
         List<Email> emails = Collections.singletonList(email);
         List<String> whitelistEmails = List.of("other@example.com");
         MimeMessage mimeMessage = mock(MimeMessage.class);
