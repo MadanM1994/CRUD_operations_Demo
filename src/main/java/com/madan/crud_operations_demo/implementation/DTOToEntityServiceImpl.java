@@ -36,7 +36,7 @@ public class DTOToEntityServiceImpl implements DTOToEntityService {
         return contactInformation;
     }
 
-    private Email convertToEmail(EmailDTO emailDTO) {
+    public Email convertToEmail(EmailDTO emailDTO) {
         Email newEmails = new Email();
         BeanUtils.copyProperties(emailDTO, newEmails);
         return newEmails;

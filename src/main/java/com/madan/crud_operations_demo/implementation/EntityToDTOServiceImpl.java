@@ -21,19 +21,19 @@ public class EntityToDTOServiceImpl implements EntityToDTOService {
         return newEmployeesDTO;
     }
 
-    private ContactInformationDTO convertTocontactInformationDTO(ContactInformation contactInformation) {
+    public ContactInformationDTO convertToContactInformationDTO(ContactInformation contactInformation) {
         ContactInformationDTO newContactInformationDTO = new ContactInformationDTO();
         BeanUtils.copyProperties(contactInformation, newContactInformationDTO);
         return newContactInformationDTO;
     }
 
-    private AddressDTO convertToaddressDTO(Address address) {
+    public AddressDTO convertToAddressDTO(Address address) {
         AddressDTO newAddressDTO = new AddressDTO();
         BeanUtils.copyProperties(address, newAddressDTO);
         return newAddressDTO;
     }
 
-    private EmailDTO convertToEmailDTO(Email email) {
+    public EmailDTO convertToEmailDTO(Email email) {
         EmailDTO newEmailDTO = new EmailDTO();
         BeanUtils.copyProperties(email, newEmailDTO);
         return newEmailDTO;

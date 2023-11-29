@@ -5,6 +5,7 @@ import com.madan.crud_operations_demo.entity.Email;
 import com.madan.crud_operations_demo.repository.EmailRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -47,9 +48,8 @@ public class EmailJobSchedulerOdd {
                     helper.setText("This is a test Email for ODD ID");
                     mailSender.send(mimeMessage);
                     updateEmailStatus(email.getEmailId(), EmailStatus.SENT);
-                } catch (MessagingException e) {
+                } catch (MailSendException | MessagingException e) {
                     updateEmailStatus(email.getEmailId(), EmailStatus.FAILED);
-                    throw new RuntimeException(e);
                 }
             }
         }
