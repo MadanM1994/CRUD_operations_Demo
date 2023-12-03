@@ -5,7 +5,6 @@ import com.madan.crud_operations_demo.jobs.EmailJobSchedulerEven;
 import com.madan.crud_operations_demo.jobs.EmailJobSchedulerOdd;
 import com.madan.crud_operations_demo.repository.EmailRepository;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -30,7 +29,7 @@ public class JobsScheduler {
         this.emailJobSchedulerOdd = emailJobSchedulerOdd;
     }
 
-    @Scheduled(cron = "${email.cron.expression}")
+    //    @Scheduled(cron = "${email.cron.expression}")
     public void emailScheduler() {
         List<Email> emails = emailRepository.findAll();
         List<String> whitelistEmails = Arrays.stream(whiteList).map(String::toLowerCase).toList();

@@ -1,13 +1,7 @@
 package com.madan.crud_operations_demo.implementation;
 
-import com.madan.crud_operations_demo.dto.AddressDTO;
-import com.madan.crud_operations_demo.dto.ContactInformationDTO;
-import com.madan.crud_operations_demo.dto.EmailDTO;
-import com.madan.crud_operations_demo.dto.EmployeesDTO;
-import com.madan.crud_operations_demo.entity.Address;
-import com.madan.crud_operations_demo.entity.ContactInformation;
-import com.madan.crud_operations_demo.entity.Email;
-import com.madan.crud_operations_demo.entity.Employees;
+import com.madan.crud_operations_demo.dto.*;
+import com.madan.crud_operations_demo.entity.*;
 import com.madan.crud_operations_demo.service.EntityToDTOService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -38,5 +32,12 @@ public class EntityToDTOServiceImpl implements EntityToDTOService {
         BeanUtils.copyProperties(email, newEmailDTO);
         return newEmailDTO;
     }
+
+    public EmployeeDetailsDTO convertToEmployeeDetailsDTO(EmployeeDetails employeeDetails) {
+        EmployeeDetailsDTO employeeDetailsDTO = new EmployeeDetailsDTO();
+        BeanUtils.copyProperties(employeeDetails, employeeDetailsDTO);
+        return employeeDetailsDTO;
+    }
+
 }
 

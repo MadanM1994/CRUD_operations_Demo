@@ -7,10 +7,13 @@ import com.madan.crud_operations_demo.projection.EmployeeByNameProjection;
 import com.madan.crud_operations_demo.repository.AddressRepository;
 import com.madan.crud_operations_demo.repository.ContactInformationRepository;
 import com.madan.crud_operations_demo.repository.EmployeesRepository;
+import jakarta.validation.Validator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -22,6 +25,8 @@ import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
+
 public class EmployeesRepositoryTest {
 
     @MockBean
@@ -35,6 +40,9 @@ public class EmployeesRepositoryTest {
 
     @Autowired
     private AddressRepository addressRepository;
+    
+    @MockBean
+    private Validator validator;
 
     @AfterEach
     public void cleanup() {

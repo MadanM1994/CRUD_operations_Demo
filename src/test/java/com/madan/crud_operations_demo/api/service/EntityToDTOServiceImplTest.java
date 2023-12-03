@@ -1,13 +1,7 @@
 package com.madan.crud_operations_demo.api.service;
 
-import com.madan.crud_operations_demo.dto.AddressDTO;
-import com.madan.crud_operations_demo.dto.ContactInformationDTO;
-import com.madan.crud_operations_demo.dto.EmailDTO;
-import com.madan.crud_operations_demo.dto.EmployeesDTO;
-import com.madan.crud_operations_demo.entity.Address;
-import com.madan.crud_operations_demo.entity.ContactInformation;
-import com.madan.crud_operations_demo.entity.Email;
-import com.madan.crud_operations_demo.entity.Employees;
+import com.madan.crud_operations_demo.dto.*;
+import com.madan.crud_operations_demo.entity.*;
 import com.madan.crud_operations_demo.implementation.EntityToDTOServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -122,4 +116,25 @@ public class EntityToDTOServiceImplTest {
 
         assertEquals("maddala.madan@gmail.com", emailDTO.getEmailAddress());
     }
+
+    @Test
+    public void entityToDTOServiceImplTest_ConvertToEmployeeDetailsDTO_ReturnEmployeeDetailsDTO() {
+        EmployeeDetails employeeDetails = EmployeeDetails.builder()
+                .employeeDetailsId(1L)
+                .firstname("Madan")
+                .lastname("Maddala")
+                .email("maddala.madan@gmail.com")
+                .phoneNumber("7034620905")
+                .zipcode("12345")
+                .build();
+
+        EmployeeDetailsDTO employeeDetailsDTO = convertService.convertToEmployeeDetailsDTO(employeeDetails);
+
+        assertEquals("Madan", employeeDetailsDTO.getFirstname());
+        assertEquals("12345", employeeDetailsDTO.getZipcode());
+        assertEquals("maddala.madan@gmail.com", employeeDetailsDTO.getEmail());
+
+    }
+
+
 }
