@@ -26,22 +26,26 @@ public class EmployeeController {
         return ResponseEntity.ok(employeesService.getAllEmployees());
     }
 
-    @GetMapping("employee/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getEmployeeById(@PathVariable int id) {
-        return ResponseEntity.ok(employeesService.getEmployeeById(id));
+        EmployeesDTO employees = employeesService.getEmployeeById(id);
+        return ResponseEntity.ok(employees);
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<List<EmployeeByNameProjection>> getEmployeeDetailsByMatch(@PathVariable String name) {
-        return ResponseEntity.ok(employeesService.getEmployeeDetailsByMatch(name));
+
+    @GetMapping("/by-firstname/{name}")
+    public ResponseEntity<?> getEmployeeDetailsByMatch(@PathVariable String name) {
+        List<EmployeeByNameProjection> employeeDetails = employeesService.getEmployeeDetailsByMatch(name);
+        return ResponseEntity.ok(employeeDetails);
     }
 
-    @PostMapping("create")
+
+    @PostMapping("/create")
     public ResponseEntity<?> addEmployee(@RequestBody EmployeesDTO employeeDTO) {
         return ResponseEntity.ok(employeesService.addEmployee(employeeDTO));
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteEmployeeById(@PathVariable int id) {
         return ResponseEntity.ok(employeesService.deleteEmployeeById(id));
     }

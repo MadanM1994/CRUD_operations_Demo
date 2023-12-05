@@ -64,7 +64,7 @@ class EmployeeControllerTest {
         EmployeesDTO employeesDTO = Mockito.mock(EmployeesDTO.class);
         when(employeesService.getEmployeeById(anyInt())).thenReturn(employeesDTO);
 
-        mockMvc.perform(get("/employees/employee/{id}", id))
+        mockMvc.perform(get("/employees/{id}", id))
                 .andExpect(status().isOk());
     }
 
@@ -110,7 +110,7 @@ class EmployeeControllerTest {
         List<EmployeeByNameProjection> listEmployeeDetails = List.of(employeeByNameProjection);
         when(employeesService.getEmployeeDetailsByMatch(anyString())).thenReturn(listEmployeeDetails);
 
-        mockMvc.perform(get("/employees/{name}", name))
+        mockMvc.perform(get("/employees/by-firstname/{name}", name))
                 .andExpect(status().isOk());
     }
 
@@ -130,11 +130,11 @@ class EmployeeControllerTest {
     @Test
     public void deleteEmployeeById_ShouldDeleteEmployee() throws Exception {
         int id = 1;
-        when(employeesService.deleteEmployeeById(anyInt())).thenReturn(Boolean.TRUE);
+        when(employeesService.deleteEmployeeById(anyInt())).thenReturn("Deleted Successfully");
 
-        mockMvc.perform(delete("/employees/delete/{id}", id))
+        mockMvc.perform(delete("/employees/{id}", id))
                 .andExpect(status().isOk())
-                .andExpect(content().string("true"));
+                .andExpect(content().string("Deleted Successfully"));
     }
 
 }

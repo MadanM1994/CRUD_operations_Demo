@@ -20,6 +20,6 @@ public interface EmployeesService {
     String addEmployee(EmployeesDTO employeesDTO);
 
     // DELETE EMPLOYEE
-    Boolean deleteEmployeeById(int id);
+    String deleteEmployeeById(int id);
 
 }

@@ -6,6 +6,7 @@ import com.madan.crud_operations_demo.dto.EmployeesDTO;
 import com.madan.crud_operations_demo.entity.Address;
 import com.madan.crud_operations_demo.entity.ContactInformation;
 import com.madan.crud_operations_demo.entity.Employees;
+import com.madan.crud_operations_demo.exception.EmployeeNotFoundException;
 import com.madan.crud_operations_demo.implementation.EmployeesServiceImpl;
 import com.madan.crud_operations_demo.projection.EmployeeByNameProjection;
 import com.madan.crud_operations_demo.repository.AddressRepository;
@@ -124,28 +125,42 @@ public class EmployeesServiceTest {
     }
 
     @Test
-    public void employeeService_DeleteEmployeeById_ReturnEmployee() {
-        //Arrange
+    public void employeeService_DeleteEmployeeById_SuccessfulDeletion() {
+        // Arrange
         int id = 1;
         Employees employees = Mockito.mock(Employees.class);
         when(employeesRepository.findById(id)).thenReturn(Optional.of(employees));
-        //Act
-        Boolean result = employeesServiceImpl.deleteEmployeeById(id);
+
+        // Act
+        String result = employeesServiceImpl.deleteEmployeeById(id);
+
         // Assert
         verify(employeesRepository).findById(id);
+        verify(contactInformationRepository).deleteByEmployeeId(id);
+        verify(addressRepository).deleteByEmployeeId(id);
         verify(employeesRepository).deleteById(id);
-        assertTrue(result);
+        assertEquals("The employee record has be successfully deleted", result);
     }
 
+
     @Test
-    public void employeeService_DeleteEmployeeById_ReturnFalse() {
+    public void employeeService_DeleteEmployeeById_EmployeeNotFoundException() {
+        // Arrange
         int id = 999;
-        when(employeesRepository.findById(anyInt())).thenReturn(Optional.empty());
+        when(employeesRepository.findById(id)).thenReturn(Optional.empty());
 
-        Boolean result = employeesServiceImpl.deleteEmployeeById(id);
+        // Act & Assert
+        Exception exception = assertThrows(EmployeeNotFoundException.class, () -> {
+            employeesServiceImpl.deleteEmployeeById(id);
+        });
 
+        // Verify that the repositories' delete methods were not called
         verify(employeesRepository).findById(id);
-        assertFalse(result);
+        verifyNoInteractions(contactInformationRepository);
+        verifyNoInteractions(addressRepository);
+
+        // Assert the exception message
+        assertEquals("The Employee record associated with the ID is not found. Please enter a valid employee ID", exception.getMessage());
     }
 
 
